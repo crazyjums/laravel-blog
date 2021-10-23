@@ -11,6 +11,12 @@ class TestController extends Controller
     : array
     {
         $name = $request->get('name');
-        return ['name' => $name];
+        //        $env  = $_SERVER['ENV'];
+        $env2 = env('APP_ENV');
+        return [
+            'name'    => $name,
+            '_SERVER' => $_SERVER,
+            'APP_ENV' => $env2
+        ];
     }
 }
