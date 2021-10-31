@@ -2,8 +2,12 @@
 
 namespace App\Exceptions;
 
+use App\Foundation\Response;
+use App\Foundation\ResponseCode;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -42,10 +46,14 @@ class Handler extends ExceptionHandler
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Exception  $exception
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function render($request, Exception $exception)
+    : \Illuminate\Http\JsonResponse
     {
+        if ($exception instanceof NotFoundHttpException || $exception instanceof MethodNotAllowedHttpException) {
+            return response()->json(Response::error(ResponseCode::ERROR_HTTP_NOT_FOUND, $exception->getMessage())->toArray());
+        }
         return parent::render($request, $exception);
     }
 }
