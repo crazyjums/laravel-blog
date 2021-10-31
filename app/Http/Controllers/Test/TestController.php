@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Test;
 
+use App\Foundation\Response;
 use App\Http\Controllers\Controller;
 
 class TestController extends Controller
@@ -10,7 +11,7 @@ class TestController extends Controller
      * @throws \App\Exceptions\ControllerParamsException
      */
     public function getTest()
-    : array
+    : Response
     {
         $rule = [
             'name' => 'required'
@@ -20,13 +21,13 @@ class TestController extends Controller
         //        $env  = $_SERVER['ENV'];
         $env2 = env('APP_ENV');
         list($a, $b) = [22, 33];
-        return [
+        return Response::success([
             'name'    => $name,
             'a'       => $a,
             'b'       => $b,
             'config'  => config('app'),
             '_SERVER' => $_SERVER,
             'APP_ENV' => $env2
-        ];
+        ]);
     }
 }

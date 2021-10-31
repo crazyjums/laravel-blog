@@ -74,9 +74,8 @@ class Response implements Arrayable
         return !$this->isSuccess($code);
     }
 
-    // 获取元数据
-
     /**
+     * 获取元数据
      * @param string|array $field 传入字符串并且未传入default的话,如果没获取到值会返回null;
      *                            传入数组会返回数组中key取到的值,啥都没获取到会返回[]
      * @param  mixed $default
@@ -103,7 +102,6 @@ class Response implements Arrayable
         else
             $this->data = $data;
     }
-
 
     /**
      * 添加处理者(处理者处理数据后必须以数组形式返回)
@@ -182,7 +180,6 @@ class Response implements Arrayable
         return $this->_formatMessage();
     }
 
-
     public function toArray()
     : array
     {
@@ -198,7 +195,6 @@ class Response implements Arrayable
 
         return $data;
     }
-
 
     public function __toString()
     {
