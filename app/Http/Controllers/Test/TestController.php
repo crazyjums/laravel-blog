@@ -3,18 +3,25 @@
 namespace App\Http\Controllers\Test;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
-    public function getTest(Request $request)
+    /**
+     * @throws \App\Exceptions\ControllerParamsException
+     */
+    public function getTest()
     : array
     {
-        $name = $request->get('name');
+        $rule = [
+            'name' => 'required'
+        ];
+        $this->checkParams($rule);
+        $name = $this->request->get('name');
         //        $env  = $_SERVER['ENV'];
         $env2 = env('APP_ENV');
         list($a, $b) = [22, 33];
         return [
+            'name'    => $name,
             'a'       => $a,
             'b'       => $b,
             'config'  => config('app'),

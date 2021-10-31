@@ -6,6 +6,14 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Contracts\Support\Arrayable;
 
+/**
+ * 通用接口返回模板，将错误码和数据通过该类渲染之后，然后返回
+ *
+ * Class Response
+ * @package App\Foundation
+ * @Date    : 2021-10-31 20:34
+ * @Author  : zhuhonggen
+ */
 class Response implements Arrayable
 {
     public $errno;
