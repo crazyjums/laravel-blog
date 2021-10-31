@@ -13,8 +13,13 @@ use Throwable;
 
 class ControllerParamsException extends Exception
 {
-    public function __construct($message = "", $code = ResponseCode::ERROR_CONTROLLER_PARAM_INVALID, Throwable $previous = null)
+    public function __construct(string $message = "", int $code = ResponseCode::ERROR_CONTROLLER_PARAM_INVALID, Throwable $previous = null)
     {
+//        var_dump(__METHOD__ . '$message='.$message,',$code='.$code.',$previous='.json_encode($previous));
         parent::__construct($message, $code, $previous);
     }
+    //    public function __construct(string $message = "", int $code = ResponseCode::ERROR_CONTROLLER_PARAM_INVALID, Throwable $previous = null)
+    //    {
+    //        parent::__construct($message, $code, $previous);
+    //    }
 }

@@ -33,7 +33,7 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Exception  $exception
+     * @param \Exception $exception
      * @return void
      */
     public function report(Exception $exception)
@@ -44,13 +44,15 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param \Illuminate\Http\Request $request
+     * @param \Exception               $exception
      * @return \Illuminate\Http\JsonResponse
      */
     public function render($request, Exception $exception)
-    : \Illuminate\Http\JsonResponse
     {
+        if ($exception instanceof ControllerParamsException) {
+            return response()->json(Response::error(ResponseCode::ERROR_CONTROLLER_PARAM_INVALID, $exception->getMessage())->toArray());
+        }
         if ($exception instanceof NotFoundHttpException || $exception instanceof MethodNotAllowedHttpException) {
             return response()->json(Response::error(ResponseCode::ERROR_HTTP_NOT_FOUND, $exception->getMessage())->toArray());
         }
