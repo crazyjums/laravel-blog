@@ -38,14 +38,11 @@ class Controller extends BaseController
     public function checkParams(array $rule, array $params = [], array $customAttributes = [])
     {
         if (empty($params)) {
-//            var_dump(__METHOD__ . '----heer');
             $params = $this->request->all();
         }
-//        var_dump(__METHOD__ . '----heer');
+        
         $validate = Validator::make($params, $rule, Validation::$msg, $customAttributes);
-//        var_dump(__METHOD__ . '----heer' . json_encode($validate));
         if ($validate->fails()) {
-//            var_dump(__METHOD__ . '----heer');
             throw new ControllerParamsException(implode('', $validate->errors()->all()));
         }
     }

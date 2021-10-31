@@ -50,9 +50,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        //控制器参数异常错误
         if ($exception instanceof ControllerParamsException) {
             return response()->json(Response::error(ResponseCode::ERROR_CONTROLLER_PARAM_INVALID, $exception->getMessage())->toArray());
         }
+
+        //输入无效的路由
         if ($exception instanceof NotFoundHttpException || $exception instanceof MethodNotAllowedHttpException) {
             return response()->json(Response::error(ResponseCode::ERROR_HTTP_NOT_FOUND, $exception->getMessage())->toArray());
         }
