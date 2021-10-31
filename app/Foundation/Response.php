@@ -16,9 +16,9 @@ use Illuminate\Contracts\Support\Arrayable;
  */
 class Response implements Arrayable
 {
-    public $errno;
-    public $errmsg;
-    public $data;
+    public $errno;  //请求错误码
+    public $errmsg;  //错误原因
+    public $data;  //请求的具体数据
     protected $handler = [];
 
     public function __construct($code, $msg = "", $data = [])
@@ -30,6 +30,7 @@ class Response implements Arrayable
 
     // 返回成功
     public static function success($data = [],$msg = '')
+    : Response
     {
         if ($data instanceof Response) {
             return $data;
@@ -38,11 +39,13 @@ class Response implements Arrayable
         if ($data instanceof Arrayable) {
             $data = $data->toArray();
         }
+
         return new static(ResponseCode::OK, $msg, $data);
     }
 
     // 返回失败
     public static function error($code = ResponseCode::ERROR, $msg = '', $data = [])
+    : Response
     {
         if ($data instanceof Response) {
             return $data;
@@ -57,13 +60,16 @@ class Response implements Arrayable
 
     // 是否成功
     public function isSuccess($code = [])
+    : bool
     {
         $code = array_merge([ResponseCode::OK], $code);
-        return in_array($this->errno, $code) ? true : false;
+
+        return in_array($this->errno, $code);
     }
 
     // 是否失败
     public function isFailed($code = [])
+    : bool
     {
         return !$this->isSuccess($code);
     }
@@ -106,6 +112,7 @@ class Response implements Arrayable
      * @date
      */
     public function addHandler($handler)
+    : Response
     {
         if (!is_array($handler)) {
             $handler = [$handler];
@@ -159,6 +166,7 @@ class Response implements Arrayable
      * @return bool
      */
     public function rawDataIsEmpty($field = null, $default = null)
+    : bool
     {
         if (is_string($field)) {
             return empty(Arr::get($this->data, $field, $default));
@@ -176,6 +184,7 @@ class Response implements Arrayable
 
 
     public function toArray()
+    : array
     {
         $data = [
             'errno'  => $this->errno,
@@ -195,6 +204,5 @@ class Response implements Arrayable
     {
         return json_encode($this->toArray());
     }
-
 }
 

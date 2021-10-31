@@ -40,7 +40,7 @@ class Controller extends BaseController
         if (empty($params)) {
             $params = $this->request->all();
         }
-        
+
         $validate = Validator::make($params, $rule, Validation::$msg, $customAttributes);
         if ($validate->fails()) {
             throw new ControllerParamsException(implode('', $validate->errors()->all()));
